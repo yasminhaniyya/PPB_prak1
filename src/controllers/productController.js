@@ -18,6 +18,18 @@ res.status(404).json({ error: err.message });
 },
 async create(req, res) {
 try {
+const { price, stock } = req.body;
+
+// Penanganan error manual: Harga tidak boleh kurang dari 0
+if (price !== undefined && price < 0) {
+return res.status(400).json({ error: "Harga (price) tidak boleh kurang dari 0" });
+}
+
+// Penanganan error manual: Stok tidak boleh kurang dari 0
+if (stock !== undefined && stock < 0) {
+return res.status(400).json({ error: "Stok (stock) tidak boleh kurang dari 0" });
+}
+
 const product = await ProductModel.create(req.body);
 res.status(201).json(product);
 } catch (err) {
