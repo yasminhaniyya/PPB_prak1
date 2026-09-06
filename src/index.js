@@ -9,7 +9,17 @@ app.use(express.json());
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/customers", customerRoutes);
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Selamat datang di API Sistem Penjualan (Seles-API)!",
+    status: "Server is running..."
+  });
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
 console.log(`Server running on port ${port}`);
 });
+
+export default app;
