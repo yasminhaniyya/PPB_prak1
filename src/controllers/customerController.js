@@ -2,8 +2,13 @@ import { CustomerModel } from "../models/customerModel.js";
 export const CustomerController = {
 async getAll(req, res) {
 try {
-const { name } = req.query; // Ambil parameter nama dari query URL
-const customers = await CustomerModel.getAll(name); // Kirim ke model
+const { name, page, limit } = req.query; // Ambil parameter nama, page, dan limit dari query URL
+
+// Tetapkan nilai default: halaman 1, maksimal 10 data per halaman (jika tidak diisi)
+const pageNumber = parseInt(page) || 1;
+const limitNumber = parseInt(limit) || 10;
+
+const customers = await CustomerModel.getAll(name, pageNumber, limitNumber); // Kirim ke model
 res.json(customers);
 } catch (err) {
 res.status(500).json({ error: err.message });
