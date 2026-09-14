@@ -1,7 +1,14 @@
 import { supabase } from "../config/supabaseClient.js";
 export const CustomerModel = {
-async getAll() {
-const { data, error } = await supabase.from("customers").select("*");
+async getAll(name) {
+let query = supabase.from("customers").select("*");
+
+// Tambahkan kondisi filter jika ada pencarian berdasarkan nama
+if (name) {
+query = query.ilike("name", `%${name}%`);
+}
+
+const { data, error } = await query;
 if (error) throw error;
 return data;
 },

@@ -2,7 +2,8 @@ import { CustomerModel } from "../models/customerModel.js";
 export const CustomerController = {
 async getAll(req, res) {
 try {
-const customers = await CustomerModel.getAll();
+const { name } = req.query; // Ambil parameter nama dari query URL
+const customers = await CustomerModel.getAll(name); // Kirim ke model
 res.json(customers);
 } catch (err) {
 res.status(500).json({ error: err.message });
